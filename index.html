@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ganpati Trading & Gymscape — Quotation & Invoice Studio</title>
+  <meta name="description" content="Professional quotation and estimate generator for Ganpati Trading, Krosfit Sports & Athletics, and Gymscape." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet" />
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- html2pdf for high quality PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="app-body">
+  <div class="app-container">
+    <!-- Top Global App Bar -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="brand-badge">
+          <i data-lucide="file-spreadsheet"></i>
+        </div>
+        <div>
+          <h1 class="brand-title">Ganpati Trading <span class="brand-sub">Quotation Studio</span></h1>
+          <p class="brand-tagline">Krosfit Sports & Athletics / Gymscape Estimate Engine</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="btn-load-preset" class="btn btn-secondary" title="Load sample invoice data from PDF">
+          <i data-lucide="sparkles"></i>
+          <span>Load PDF Sample</span>
+        </button>
+        <button id="btn-save-quote" class="btn btn-secondary" title="Save current quote in browser">
+          <i data-lucide="save"></i>
+          <span>Save Quote</span>
+        </button>
+        <button id="btn-saved-list" class="btn btn-secondary" title="View saved quotation drafts">
+          <i data-lucide="folder-clock"></i>
+          <span>Saved Drafts (<span id="saved-count">0</span>)</span>
+        </button>
+        <button id="btn-whatsapp" class="btn btn-emerald" title="Create WhatsApp formatted message">
+          <i data-lucide="message-circle"></i>
+          <span>WhatsApp Text</span>
+        </button>
+        <button id="btn-print" class="btn btn-outline" title="Print document">
+          <i data-lucide="printer"></i>
+          <span>Print</span>
+        </button>
+        <button id="btn-download-pdf" class="btn btn-primary" title="Download pixel-perfect PDF">
+          <i data-lucide="download"></i>
+          <span>Download PDF</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace: Split Pane -->
+    <main class="workspace-layout">
+      
+      <!-- LEFT PANE: Editor Controls -->
+      <aside class="editor-pane" id="editor-pane">
+        <div class="pane-inner">
+
+          <!-- Section: Document Type & Numbering -->
+          <div class="accordion-item active" data-accordion="doc-meta">
+            <div class="accordion-header">
+              <div class="accordion-title">
+                <i data-lucide="file-text"></i>
+                <span>Document Header & Metadata</span>
+              </div>
+              <i data-lucide="chevron-down" class="accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label>Document Title / Badge</label>
+                  <input type="text" id="input-doc-title" value="INVOICE CUM ESTIMATE" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>Estimate / Inv No.</label>
+                  <input type="text" id="input-doc-number" value="GT/2026-27/087" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>Date</label>
+                  <input type="text" id="input-doc-date" value="24/08/2026" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>Category</label>
+                  <input type="text" id="input-doc-category" value="Commercial Sports Setup" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>Place of Supply</label>
+                  <input type="text" id="input-doc-pos" value="Uttar Pradesh (09)" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>Validity</label>
+                  <input type="text" id="input-doc-validity" value="15 Days from Date of Issue" class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Firm & Company Info -->
+          <div class="accordion-item" data-accordion="firm-info">
+            <div class="accordion-header">
+              <div class="accordion-title">
+                <i data-lucide="building-2"></i>
+                <span>Firm Details (Ganpati Trading)</span>
+              </div>
+              <i data-lucide="chevron-down" class="accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div class="form-group">
+                <label>Company Name</label>
+                <input type="text" id="input-firm-name" value="GANPATI TRADING" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Brand / Sub-Heading</label>
+                <input type="text" id="input-firm-sub" value="KROSFITSPORTS&ATHLETICS / GYMSCAPE" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Office Address</label>
+                <textarea id="input-firm-address" rows="2" class="form-control">2-ALalbagh,Naza Market Road, Opposite NoveltyCinemaHall, Hazratganj, Lucknow, U.P. - 226001</textarea>
+              </div>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label>Contact Person & Role</label>
+                  <input type="text" id="input-firm-prop" value="Rishabh Bhatia (Prop.)" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>Mobile Number</label>
+                  <input type="text" id="input-firm-mobile" value="+91-9696422319" class="form-control" />
+                </div>
+                <div class="form-group span-2">
+                  <label>Email Addresses</label>
+                  <input type="text" id="input-firm-email" value="bhatiatrax@gmail.com, rishabhbhatia91@gmail.com" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>GSTIN</label>
+                  <input type="text" id="input-firm-gstin" value="09BZIPB3705K1ZD" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>State & Code</label>
+                  <input type="text" id="input-firm-state" value="Uttar Pradesh (Code: 09)" class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Client / Billed To & Supply Reference -->
+          <div class="accordion-item active" data-accordion="client-info">
+            <div class="accordion-header">
+              <div class="accordion-title">
+                <i data-lucide="user-check"></i>
+                <span>Billed To & Supply Reference</span>
+              </div>
+              <i data-lucide="chevron-down" class="accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <h4 class="form-subheading">Client (Billed / Quoted To)</h4>
+              <div class="form-grid-2">
+                <div class="form-group span-2">
+                  <label>Customer / Client Name</label>
+                  <input type="text" id="input-client-name" value="Mr. Shreyas Bhatia" class="form-control" />
+                </div>
+                <div class="form-group span-2">
+                  <label>Customer Address</label>
+                  <input type="text" id="input-client-address" value="Kanpur, Uttar Pradesh" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>Contact No</label>
+                  <input type="text" id="input-client-contact" value="+91-XXXXXXXXXX" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>GSTIN / State</label>
+                  <input type="text" id="input-client-gstin" value="Unregistered / 09 (U.P.)" class="form-control" />
+                </div>
+              </div>
+
+              <h4 class="form-subheading mt-3">Supply / Order Reference</h4>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label>Supply Type</label>
+                  <input type="text" id="input-supply-type" value="Sports & Gaming Equipment" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>Delivery Mode</label>
+                  <input type="text" id="input-delivery-mode" value="Dedicated Road Transport" class="form-control" />
+                </div>
+                <div class="form-group span-2">
+                  <label>Payment Terms</label>
+                  <input type="text" id="input-payment-terms" value="Direct Bank Transfer / UPI" class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Line Items & Specifications -->
+          <div class="accordion-item active" data-accordion="items-list">
+            <div class="accordion-header">
+              <div class="accordion-title">
+                <i data-lucide="shopping-bag"></i>
+                <span>Quotation Items (<span id="items-count-badge">6</span>)</span>
+              </div>
+              <i data-lucide="chevron-down" class="accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div class="items-actions-bar">
+                <button id="btn-add-item" class="btn btn-sm btn-primary">
+                  <i data-lucide="plus"></i> Add Blank Item
+                </button>
+                <div class="dropdown-container">
+                  <button id="btn-item-presets-menu" class="btn btn-sm btn-secondary">
+                    <i data-lucide="package-plus"></i> Add Preset <i data-lucide="chevron-down" class="icon-tiny"></i>
+                  </button>
+                  <div class="preset-dropdown-menu" id="preset-menu">
+                    <button class="preset-opt" data-preset="pool1">Commercial Pool Table (Option 1)</button>
+                    <button class="preset-opt" data-preset="pool2">Commercial Pool Table (Option 2)</button>
+                    <button class="preset-opt" data-preset="foosball1">Commercial Foosball Table (Option 1)</button>
+                    <button class="preset-opt" data-preset="foosball2">Commercial Foosball Table (Option 2)</button>
+                    <button class="preset-opt" data-preset="airhockey">Commercial Air Hockey Table</button>
+                    <button class="preset-opt" data-preset="tt">Table Tennis Table (Metco Club DX KTR)</button>
+                    <button class="preset-opt" data-preset="treadmill">Commercial Motorized Treadmill</button>
+                    <button class="preset-opt" data-preset="crossfit">Multi-Functional Crossfit Rig & Weights</button>
+                  </div>
+                </div>
+                <button id="btn-clear-items" class="btn btn-sm btn-danger-outline" title="Clear all items">
+                  <i data-lucide="trash-2"></i>
+                </button>
+              </div>
+
+              <!-- Master Toggle for Images Column -->
+              <div class="form-group checkbox-row mb-3" style="background: rgba(15, 23, 42, 0.6); padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid var(--border-color);">
+                <label class="custom-toggle">
+                  <input type="checkbox" id="toggle-show-images" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-label" style="font-size: 0.78rem;">Include Product Image Column in Document</span>
+              </div>
+
+              <!-- Dynamic Items Container in Editor -->
+              <div id="editor-items-container" class="editor-items-list">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Footer, Bank & Terms -->
+          <div class="accordion-item" data-accordion="bank-terms">
+            <div class="accordion-header">
+              <div class="accordion-title">
+                <i data-lucide="credit-card"></i>
+                <span>Bank Details & Terms</span>
+              </div>
+              <i data-lucide="chevron-down" class="accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div class="form-group">
+                <label>Table Bottom Note (Page 1)</label>
+                <input type="text" id="input-bottom-note" value="Note: GST and transportation charges are extra." class="form-control" />
+              </div>
+
+              <h4 class="form-subheading mt-3">Bank Payment Details</h4>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label>A/C Name</label>
+                  <input type="text" id="input-bank-accname" value="GANPATI TRADING" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>Bank Name</label>
+                  <input type="text" id="input-bank-name" value="HDFC Bank" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>Account Number</label>
+                  <input type="text" id="input-bank-accno" value="50200064383526" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>IFSC Code</label>
+                  <input type="text" id="input-bank-ifsc" value="HDFC0000723" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>Branch</label>
+                  <input type="text" id="input-bank-branch" value="Aminabad, Lucknow" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>Account Type</label>
+                  <input type="text" id="input-bank-acctype" value="Current Account" class="form-control" />
+                </div>
+              </div>
+
+              <h4 class="form-subheading mt-3">Terms & Conditions (One per line)</h4>
+              <div class="form-group">
+                <textarea id="input-terms" rows="5" class="form-control">GST @ 18% charged and itemized.
+Air Hockey carries 1-Year Electrical Warranty.
+Selection options (Option 1 / Option 2) finalized prior to dispatch.
+All disputes subject to Lucknow Jurisdiction only.
+E. & O.E.</textarea>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label>Signatory Text</label>
+                  <input type="text" id="input-signatory-title" value="For GANPATI TRADING" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label>Signatory Sub-label</label>
+                  <input type="text" id="input-signatory-subtitle" value="Authorised Signatory" class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Calculations & Summary Settings -->
+          <div class="accordion-item" data-accordion="pricing-calc">
+            <div class="accordion-header">
+              <div class="accordion-title">
+                <i data-lucide="calculator"></i>
+                <span>Calculations, Tax & Total Modes</span>
+              </div>
+              <i data-lucide="chevron-down" class="accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div class="form-group checkbox-row">
+                <label class="custom-toggle">
+                  <input type="checkbox" id="toggle-show-grandtotal" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-label">Show Summary / Grand Total Bar</span>
+              </div>
+
+              <div class="form-group checkbox-row">
+                <label class="custom-toggle">
+                  <input type="checkbox" id="toggle-apply-tax" />
+                  <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-label">Include 18% GST in Calculation Table</span>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label>Freight / Transport (₹)</label>
+                  <input type="number" id="input-transport-charges" value="0" class="form-control" min="0" />
+                </div>
+                <div class="form-group">
+                  <label>Special Discount (₹)</label>
+                  <input type="number" id="input-discount-charges" value="0" class="form-control" min="0" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- RIGHT PANE: Live Document Stage Preview -->
+      <section class="preview-stage-container">
+        
+        <!-- Preview Controls Toolbar -->
+        <div class="preview-toolbar">
+          <div class="preview-mode-switch">
+            <span class="toolbar-label"><i data-lucide="eye"></i> Live A4 Document Preview</span>
+          </div>
+          <div class="zoom-controls">
+            <button id="btn-zoom-out" class="btn-icon" title="Zoom Out"><i data-lucide="zoom-out"></i></button>
+            <span id="zoom-level-text" class="zoom-label">100%</span>
+            <button id="btn-zoom-in" class="btn-icon" title="Zoom In"><i data-lucide="zoom-in"></i></button>
+            <button id="btn-zoom-fit" class="btn-icon" title="Fit Width"><i data-lucide="maximize-2"></i></button>
+          </div>
+        </div>
+
+        <!-- Scrollable Document Stage Wrapper -->
+        <div class="document-viewport" id="document-viewport">
+          
+          <!-- The printable/exportable A4 Document Root -->
+          <div id="printable-document" class="printable-document">
+            
+            <!-- PAGE 1 OF DOCUMENT -->
+            <div class="a4-page" id="doc-page-1">
+              
+              <!-- Document Header Block -->
+              <div class="doc-header">
+                <div class="doc-firm-details">
+                  <h2 class="doc-firm-name" id="view-firm-name">GANPATI TRADING</h2>
+                  <div class="doc-firm-sub" id="view-firm-sub">KROSFITSPORTS&ATHLETICS / GYMSCAPE</div>
+                  <div class="doc-firm-address" id="view-firm-address">2-ALalbagh,Naza Market Road, Opposite NoveltyCinemaHall, Hazratganj, Lucknow, U.P. - 226001</div>
+                  <div class="doc-firm-contact">
+                    <span id="view-firm-prop">Contact: Rishabh Bhatia (Prop.)</span> | 
+                    <span id="view-firm-mobile">Mobile: +91-9696422319</span>
+                  </div>
+                  <div class="doc-firm-email" id="view-firm-email">Email: bhatiatrax@gmail.com, rishabhbhatia91@gmail.com</div>
+                  <div class="doc-firm-gst">
+                    <span>GSTIN: <strong id="view-firm-gstin">09BZIPB3705K1ZD</strong></span> | 
+                    <span>State: <strong id="view-firm-state">Uttar Pradesh (Code: 09)</strong></span>
+                  </div>
+                </div>
+
+                <div class="doc-badge-meta">
+                  <div class="doc-title-badge" id="view-doc-title">INVOICE CUM ESTIMATE</div>
+                  <table class="doc-meta-table">
+                    <tr>
+                      <td class="meta-label">Estimate / Inv No:</td>
+                      <td class="meta-val" id="view-doc-number">GT/2026-27/087</td>
+                    </tr>
+                    <tr>
+                      <td class="meta-label">Date :</td>
+                      <td class="meta-val" id="view-doc-date">24/08/2026</td>
+                    </tr>
+                    <tr>
+                      <td class="meta-label">Category:</td>
+                      <td class="meta-val" id="view-doc-category">Commercial Sports Setup</td>
+                    </tr>
+                    <tr>
+                      <td class="meta-label">Place of Supply:</td>
+                      <td class="meta-val" id="view-doc-pos">Uttar Pradesh (09)</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Customer & Supply Reference Dual Box -->
+              <div class="doc-two-column-boxes">
+                <div class="doc-box client-box">
+                  <div class="doc-box-title">BILLED / QUOTED TO</div>
+                  <div class="doc-box-body">
+                    <div class="box-row">
+                      <span class="b-label">Customer / Client:</span>
+                      <span class="b-val strong" id="view-client-name">Mr. Shreyas Bhatia</span>
+                    </div>
+                    <div class="box-row">
+                      <span class="b-label">Address:</span>
+                      <span class="b-val" id="view-client-address">Kanpur, Uttar Pradesh</span>
+                    </div>
+                    <div class="box-row">
+                      <span class="b-label">Contact No:</span>
+                      <span class="b-val" id="view-client-contact">+91-XXXXXXXXXX</span>
+                    </div>
+                    <div class="box-row">
+                      <span class="b-label">GSTIN / State:</span>
+                      <span class="b-val" id="view-client-gstin">Unregistered / 09 (U.P.)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="doc-box supply-box">
+                  <div class="doc-box-title">SUPPLY / ORDER REFERENCE</div>
+                  <div class="doc-box-body">
+                    <div class="box-row">
+                      <span class="b-label">Supply Type:</span>
+                      <span class="b-val" id="view-supply-type">Sports & Gaming Equipment</span>
+                    </div>
+                    <div class="box-row">
+                      <span class="b-label">Delivery Mode:</span>
+                      <span class="b-val" id="view-delivery-mode">Dedicated Road Transport</span>
+                    </div>
+                    <div class="box-row">
+                      <span class="b-label">Payment Terms:</span>
+                      <span class="b-val" id="view-payment-terms">Direct Bank Transfer / UPI</span>
+                    </div>
+                    <div class="box-row">
+                      <span class="b-label">Validity:</span>
+                      <span class="b-val" id="view-doc-validity">15 Days from Date of Issue</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Main Items Table -->
+              <div class="doc-table-container">
+                <table class="doc-items-table" id="view-items-table">
+                  <thead>
+                    <tr>
+                      <th class="col-hash">#</th>
+                      <th class="col-img">PRODUCT IMAGE</th>
+                      <th class="col-desc">ITEM DESCRIPTION & SPECIFICATIONS</th>
+                      <th class="col-qty">QTY</th>
+                      <th class="col-rate">RATE (₹)</th>
+                      <th class="col-amount">AMOUNT (₹)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="view-items-tbody">
+                    <!-- Dynamic Rows Rendered Here -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Bottom Note Banner (Page 1) -->
+              <div class="doc-bottom-note-box" id="view-bottom-note-box">
+                <p id="view-bottom-note">Note: GST and transportation charges are extra.</p>
+              </div>
+
+              <!-- Summary calculation row if enabled -->
+              <div class="doc-summary-totals-card" id="view-totals-summary-card">
+                <div class="totals-row">
+                  <span>Items Subtotal:</span>
+                  <strong id="view-subtotal-val">₹ 3,54,000.00</strong>
+                </div>
+                <div class="totals-row" id="view-tax-row" style="display: none;">
+                  <span>GST (18%):</span>
+                  <strong id="view-tax-val">₹ 0.00</strong>
+                </div>
+                <div class="totals-row" id="view-transport-row" style="display: none;">
+                  <span>Transportation & Freight:</span>
+                  <strong id="view-transport-val">₹ 0.00</strong>
+                </div>
+                <div class="totals-row" id="view-discount-row" style="display: none;">
+                  <span>Discount:</span>
+                  <strong id="view-discount-val">- ₹ 0.00</strong>
+                </div>
+                <div class="totals-row grand-total-line">
+                  <span>Grand Total:</span>
+                  <strong id="view-grandtotal-val">₹ 3,54,000.00</strong>
+                </div>
+                <div class="words-line" id="view-amount-words">Rupees Three Lakh Fifty-Four Thousand Only</div>
+              </div>
+
+              <!-- 3-Column Footer Layout: Bank Details, Terms & Signatory (Page 1) -->
+              <div class="page-two-table-layout doc-footer-block">
+                <div class="page-two-col bank-details-col">
+                  <div class="section-heading">BANK PAYMENT DETAILS</div>
+                  <div class="bank-info-content">
+                    <div class="bank-row">
+                      <span class="bank-lbl">A/C Name:</span>
+                      <strong class="bank-val" id="view-bank-accname">GANPATI TRADING</strong>
+                    </div>
+                    <div class="bank-row">
+                      <span class="bank-lbl">Bank:</span>
+                      <span class="bank-val" id="view-bank-name">HDFC Bank</span>
+                    </div>
+                    <div class="bank-row">
+                      <span class="bank-lbl">A/C No.:</span>
+                      <strong class="bank-val" id="view-bank-accno">50200064383526</strong>
+                    </div>
+                    <div class="bank-row">
+                      <span class="bank-lbl">IFSC Code:</span>
+                      <strong class="bank-val" id="view-bank-ifsc">HDFC0000723</strong>
+                    </div>
+                    <div class="bank-row">
+                      <span class="bank-lbl">Branch:</span>
+                      <span class="bank-val" id="view-bank-branch">Aminabad, Lucknow</span>
+                    </div>
+                    <div class="bank-row">
+                      <span class="bank-lbl">A/C Type:</span>
+                      <span class="bank-val" id="view-bank-acctype">Current Account</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="page-two-col terms-col">
+                  <div class="section-heading">TERMS & CONDITIONS</div>
+                  <ul class="terms-list" id="view-terms-list">
+                    <!-- Populated via JS -->
+                  </ul>
+                  <div class="eoe-badge">E. & O.E.</div>
+                </div>
+
+                <div class="page-two-col signature-col">
+                  <div class="sig-header" id="view-sig-title">For GANPATI TRADING</div>
+                  <div class="sig-stamp-space">
+                    <!-- Digital seal/stamp placeholder -->
+                  </div>
+                  <div class="sig-footer-label" id="view-sig-subtitle">Authorised Signatory</div>
+                </div>
+              </div>
+
+              <!-- Footer Page 1 numbering -->
+              <div class="doc-page-footer">
+                <span class="page-num">Page 1 of 1</span>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- Modal for Saved Drafts -->
+    <div class="modal-overlay" id="saved-modal" style="display: none;">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3><i data-lucide="folder-clock"></i> Saved Quotations & Drafts</h3>
+          <button class="modal-close" id="btn-close-modal">&times;</button>
+        </div>
+        <div class="modal-body" id="saved-drafts-list">
+          <!-- Drafts rendered here -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="btn-export-json"><i data-lucide="file-down"></i> Backup / Export JSON</button>
+          <label class="btn btn-secondary cursor-pointer">
+            <i data-lucide="file-up"></i> Restore JSON
+            <input type="file" id="input-import-json" accept=".json" style="display:none;" />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for WhatsApp Text Preview & Copy -->
+    <div class="modal-overlay" id="whatsapp-modal" style="display: none;">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3><i data-lucide="message-circle" class="text-emerald"></i> WhatsApp Quotation Summary</h3>
+          <button class="modal-close" id="btn-close-wa-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted mb-2">You can copy and send this quick formatted text summary directly to the client on WhatsApp:</p>
+          <textarea id="wa-text-area" class="form-control wa-textarea" rows="12" readonly></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-emerald" id="btn-copy-wa"><i data-lucide="copy"></i> Copy Text</button>
+          <button class="btn btn-primary" id="btn-open-wa"><i data-lucide="send"></i> Open WhatsApp Web</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
