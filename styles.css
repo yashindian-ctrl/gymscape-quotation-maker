@@ -447,6 +447,89 @@ input:checked + .toggle-slider:before {
   position: relative;
 }
 
+.item-settings-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  background: rgba(15, 23, 42, 0.7);
+  padding: 0.55rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 0.85rem;
+}
+
+.preset-group-title {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #93c5fd;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.6rem 0.15rem 0.6rem;
+  border-bottom: 1px solid #334155;
+  margin-bottom: 0.2rem;
+}
+
+.item-mode-pills {
+  display: flex;
+  gap: 0.35rem;
+  background: #1e293b;
+  padding: 0.2rem;
+  border-radius: 6px;
+  margin-bottom: 0.45rem;
+}
+
+.item-mode-pill {
+  flex: 1;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.item-mode-pill.active {
+  background: #3b82f6;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+}
+
+.unit-chips-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.unit-chip-btn {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #cbd5e1;
+  font-size: 0.68rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.unit-chip-btn:hover {
+  background: #334155;
+  color: #60a5fa;
+  border-color: #60a5fa;
+}
+
+.unit-chip-btn.selected {
+  background: rgba(59, 130, 246, 0.25);
+  border-color: #3b82f6;
+  color: #93c5fd;
+  font-weight: 700;
+}
+
 .preset-dropdown-menu {
   display: none;
   position: absolute;
@@ -458,7 +541,9 @@ input:checked + .toggle-slider:before {
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.5);
   z-index: 100;
-  width: 280px;
+  width: 320px;
+  max-height: 420px;
+  overflow-y: auto;
   padding: 0.4rem;
 }
 
@@ -472,8 +557,8 @@ input:checked + .toggle-slider:before {
   border: none;
   color: #e2e8f0;
   text-align: left;
-  padding: 0.55rem 0.75rem;
-  font-size: 0.78rem;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.76rem;
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.15s;

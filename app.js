@@ -1,6 +1,6 @@
 /**
  * GANPATI TRADING & GYMSCAPE - QUOTATION MAKER STUDIO
- * Interactive core engine and reactive document renderer
+ * Interactive core engine supporting Sports Flooring (Sq.Ft Area) & Gym Equipment
  */
 
 // Helper to encode SVG string safely to Base64 data URI
@@ -112,8 +112,102 @@ const DEFAULT_IMAGES = {
   `)
 };
 
-// Item catalog presets
+// Item catalog presets (Sports Flooring & Infrastructure + Equipment)
 const CATALOG_PRESETS = {
+  // Sports Flooring Presets
+  flooring_base: {
+    code: '1',
+    name: 'Removal of existing layer and base repairwork',
+    specs: [
+      '1. Scraping of Existing layers.',
+      '2. Application of a special Grout Mix of Deep patch and G.P.2 Non-Shrink Grout along with 80 GSM Glass Fiber Mesh. This will help us to enhance the life of existing cemented base and minimize undulation.',
+      '3. After curing of repair work, grinding of the uneven spots to minimize undulation and ensure smooth top layer for cushion court layer installation.'
+    ],
+    note: 'Note : Area to be measured on actuals',
+    mode: 'area',
+    qty: 5400,
+    unit: 'Sq. Ft.',
+    rate: 18.00,
+    image: ''
+  },
+  flooring_acrylic: {
+    code: '2',
+    name: 'Synthetic Acrylic 8-Layer Cushion Sports Court (ITF Certified)',
+    specs: [
+      '1. Primer Coat: High penetration 100% acrylic bonding agent.',
+      '2. Cushion Coats: 3 Coats of Acrylic Resurfacer with heavy rubber granules.',
+      '3. Top Coats: 2 Coats of UV-Resistant Color Wear Coat (ITF Pace Certified).',
+      '4. Game Lines: Precision line marking with 100% Acrylic Textured Paint (Tennis / Basketball / Volleyball / Badminton).'
+    ],
+    note: 'Note : 5-Year Weather & Performance Warranty',
+    mode: 'area',
+    qty: 5400,
+    unit: 'Sq. Ft.',
+    rate: 85.00,
+    image: ''
+  },
+  flooring_wood: {
+    code: '3',
+    name: 'Indoor Teak Wood Badminton Court Flooring (BWF Standard)',
+    specs: [
+      'Surface: 21mm thick Kiln-Dried First Quality Teak Wood tongue & groove planks.',
+      'Sub-structure: Air-cushioned shock absorbing EPDM rubber pads on pine wood runners.',
+      'Finish: Anti-skid polyurethane sports seal & court line markings.'
+    ],
+    note: 'Note : Includes anti-termite and moisture barrier treatment',
+    mode: 'area',
+    qty: 1800,
+    unit: 'Sq. Ft.',
+    rate: 240.00,
+    image: ''
+  },
+  flooring_pu: {
+    code: '4',
+    name: 'Outdoor Polyurethane (PU) Seamless Court Flooring (8mm)',
+    specs: [
+      'Base: High density prefabricated EPDM shock absorption mat layer.',
+      'Pore Sealer & Top Coat: 2mm seamless UV-stable Polyurethane wear coat with anti-glare finish.',
+      'Includes game line markings for multisport.'
+    ],
+    note: 'Note : Installation by certified applicator team',
+    mode: 'area',
+    qty: 4500,
+    unit: 'Sq. Ft.',
+    rate: 165.00,
+    image: ''
+  },
+  flooring_turf: {
+    code: '5',
+    name: 'Multisport Artificial Grass Turf (25mm / 50mm UV Stabilized)',
+    specs: [
+      'Fiber: Monofilament PE with diamond spine, 12000 Dtex, UV resistant.',
+      'Backing: Double PP + Net + SBR Latex with water drainage holes.',
+      'Infill: Graded silica sand and cryogenic SBR rubber granules.'
+    ],
+    note: 'Note : Includes joint tape and specialized PU adhesive',
+    mode: 'area',
+    qty: 7200,
+    unit: 'Sq. Ft.',
+    rate: 70.00,
+    image: ''
+  },
+  flooring_pp: {
+    code: '6',
+    name: 'Interlocking Modular PP Sports Tiles (Weatherproof)',
+    specs: [
+      'Material: High-impact Polypropylene (PP) copolymer with expansion joints.',
+      'Pattern: Shock-absorbent cross-ribbed drainage surface for all-weather play.',
+      'UV and fade resistant with zero maintenance.'
+    ],
+    note: 'Note : Direct snap-lock installation on hard base',
+    mode: 'area',
+    qty: 5000,
+    unit: 'Sq. Ft.',
+    rate: 115.00,
+    image: ''
+  },
+
+  // Sports & Gym Equipment Presets
   pool1: {
     code: '1A',
     name: 'Commercial Pool Table (Option 1: Standard Commercial Slates)',
@@ -124,6 +218,7 @@ const CATALOG_PRESETS = {
       'Accessories Included: 1 Imported Ball Set, 4 Premium Ashwood Cues, Triangle, Brush, Cue Stand, 12 Chalks, 12 Cue Tips, Dust Cover'
     ],
     note: 'Note : Installation charges are Rs. 10000',
+    mode: 'qty',
     qty: 1,
     unit: 'Unit',
     rate: 105000,
@@ -137,6 +232,7 @@ const CATALOG_PRESETS = {
       'Accessories Included: Complete 4-Cue Ashwood Kit, Heavy Brass Triangle, Deluxe Wall Cue Rack & Cover'
     ],
     note: 'Note : Installation charges are Rs. 5000',
+    mode: 'qty',
     qty: 1,
     unit: 'Unit',
     rate: 95000,
@@ -149,6 +245,7 @@ const CATALOG_PRESETS = {
       'Includes: All accessories'
     ],
     note: 'Note : Installation charges are Rs. 3000',
+    mode: 'qty',
     qty: 1,
     unit: 'Unit',
     rate: 26000,
@@ -161,6 +258,7 @@ const CATALOG_PRESETS = {
       'Includes: All accessories'
     ],
     note: 'Note : Installation charges are Rs. 3000',
+    mode: 'qty',
     qty: 1,
     unit: 'Unit',
     rate: 38000,
@@ -173,6 +271,7 @@ const CATALOG_PRESETS = {
       'Includes: All accessories'
     ],
     note: 'Note : Installation charges are Rs. 8000',
+    mode: 'qty',
     qty: 1,
     unit: 'Unit',
     rate: 68000,
@@ -186,6 +285,7 @@ const CATALOG_PRESETS = {
       'Includes: All accessories'
     ],
     note: 'Note : Installation charges are Rs. 3000',
+    mode: 'qty',
     qty: 1,
     unit: 'Unit',
     rate: 22000,
@@ -200,6 +300,7 @@ const CATALOG_PRESETS = {
       'Display: Touch LED Console with Speed, Distance, Calories, Pulse, Incline'
     ],
     note: 'Note : Free on-site installation included',
+    mode: 'qty',
     qty: 1,
     unit: 'Unit',
     rate: 145000,
@@ -213,6 +314,7 @@ const CATALOG_PRESETS = {
       'Includes: J-Cups, Spotter Arms, Monkey Bar ladder, 150kg Olympic Rubber Plates'
     ],
     note: 'Note : Installation charges are Rs. 5000',
+    mode: 'qty',
     qty: 1,
     unit: 'Set',
     rate: 125000,
@@ -252,6 +354,7 @@ const state = {
     paymentTerms: 'Direct Bank Transfer / UPI'
   },
   items: [
+    { ...CATALOG_PRESETS.flooring_base },
     { ...CATALOG_PRESETS.pool1 },
     { ...CATALOG_PRESETS.pool2 },
     { ...CATALOG_PRESETS.foosball1 },
@@ -280,6 +383,7 @@ const state = {
     sigSubtitle: 'Authorised Signatory'
   },
   calc: {
+    qtyHeader: 'QTY / AREA',
     showImages: true,
     showGrandTotal: true,
     applyTax: false,
@@ -297,6 +401,13 @@ function formatINR(val) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
+}
+
+// Number formatter for quantity or sq.ft area (e.g. 5400 -> 5,400)
+function formatQtyNum(val) {
+  const num = Number(val);
+  if (isNaN(num)) return val;
+  return num.toLocaleString('en-IN');
 }
 
 // Convert Number to Words (Indian Format)
@@ -398,6 +509,31 @@ function setupEventListeners() {
   });
   bindInput('input-signatory-title', (val) => { state.footer.sigTitle = val; renderSignatory(); });
   bindInput('input-signatory-subtitle', (val) => { state.footer.sigSubtitle = val; renderSignatory(); });
+
+  // Qty/Area Header Label Selector
+  const selectQtyHeader = document.getElementById('select-qty-header');
+  const customQtyInput = document.getElementById('input-custom-qty-header');
+  if (selectQtyHeader) {
+    selectQtyHeader.addEventListener('change', (e) => {
+      if (e.target.value === 'custom') {
+        customQtyInput.style.display = 'block';
+        state.calc.qtyHeader = customQtyInput.value || 'QTY / AREA';
+      } else {
+        customQtyInput.style.display = 'none';
+        state.calc.qtyHeader = e.target.value;
+      }
+      renderTableHeader();
+      autosaveToStorage();
+    });
+  }
+
+  if (customQtyInput) {
+    customQtyInput.addEventListener('input', (e) => {
+      state.calc.qtyHeader = e.target.value || 'QTY / AREA';
+      renderTableHeader();
+      autosaveToStorage();
+    });
+  }
 
   // Master Image Column Toggle
   const toggleImagesEl = document.getElementById('toggle-show-images');
@@ -525,17 +661,19 @@ function fitZoomToWidth() {
 }
 
 // Item Management
-function addNewItem() {
+function addNewItem(mode = 'qty') {
   const nextNum = state.items.length + 1;
+  const isArea = mode === 'area';
   state.items.push({
     code: String(nextNum),
-    name: 'New Sports / Fitness Item',
-    specs: ['Dimensions: Standard', 'Includes: All accessories'],
-    note: 'Note : Installation charges extra',
-    qty: 1,
-    unit: 'Unit',
+    name: isArea ? 'Sports Flooring / Court Application' : 'New Sports / Fitness Item',
+    specs: isArea ? ['Dimensions / Area: Standard court', 'Includes: Material, Application & Line Marking'] : ['Dimensions: Standard', 'Includes: All accessories'],
+    note: isArea ? 'Note : Measurement as per actuals' : 'Note : Installation charges extra',
+    mode: isArea ? 'area' : 'qty',
+    qty: isArea ? 1000 : 1,
+    unit: isArea ? 'Sq. Ft.' : 'Unit',
     rate: 0,
-    image: '' // Optional / empty by default for new items
+    image: ''
   });
   renderItems();
 }
@@ -560,6 +698,31 @@ function moveItem(index, dir) {
   state.items[target] = temp;
   renderItems();
 }
+
+// Set item calculation mode (Qty vs Area)
+window.setItemMode = function(index, mode) {
+  if (!state.items[index]) return;
+  state.items[index].mode = mode;
+  if (mode === 'area') {
+    if (!state.items[index].unit || state.items[index].unit === 'Unit') {
+      state.items[index].unit = 'Sq. Ft.';
+    }
+  } else {
+    if (state.items[index].unit === 'Sq. Ft.') {
+      state.items[index].unit = 'Unit';
+    }
+  }
+  renderItems();
+  autosaveToStorage();
+};
+
+// Set unit directly from chip
+window.setUnitChip = function(index, unitText) {
+  if (!state.items[index]) return;
+  state.items[index].unit = unitText;
+  renderItems();
+  autosaveToStorage();
+};
 
 // Render All Components
 function renderAll() {
@@ -615,13 +778,14 @@ function renderTableHeader() {
   const table = document.getElementById('view-items-table');
   const thead = table.querySelector('thead');
   const showImg = state.calc.showImages !== false;
+  const qtyHeader = state.calc.qtyHeader || 'QTY / AREA';
 
   thead.innerHTML = `
     <tr>
       <th class="col-hash">#</th>
       ${showImg ? '<th class="col-img">PRODUCT IMAGE</th>' : ''}
       <th class="col-desc">ITEM DESCRIPTION & SPECIFICATIONS</th>
-      <th class="col-qty">QTY</th>
+      <th class="col-qty">${qtyHeader}</th>
       <th class="col-rate">RATE (₹)</th>
       <th class="col-amount">AMOUNT (₹)</th>
     </tr>
@@ -669,6 +833,7 @@ function renderItems() {
     card.className = 'item-card';
 
     const hasImg = item.image && item.image.trim().length > 0;
+    const isAreaMode = item.mode === 'area';
     
     // Clean Image Box HTML
     let imageBoxHtml = '';
@@ -699,6 +864,15 @@ function renderItems() {
       `;
     }
 
+    // Unit Quick Chips
+    const areaChips = ['Sq. Ft.', 'Sq. Mtr.', 'Rft', 'Court', 'Job', 'Lump Sum'];
+    const qtyChips = ['Unit', 'Set', 'Nos', 'Pcs', 'Pairs'];
+    const activeChips = isAreaMode ? areaChips : qtyChips;
+
+    const chipsHtml = activeChips.map(u => `
+      <button type="button" class="unit-chip-btn ${item.unit === u ? 'selected' : ''}" onclick="setUnitChip(${index}, '${u}')">${u}</button>
+    `).join('');
+
     card.innerHTML = `
       <div class="item-card-header">
         <div class="item-badge-row">
@@ -712,38 +886,55 @@ function renderItems() {
           <button class="btn-icon btn-danger-outline" onclick="removeItem(${index})" title="Remove"><i data-lucide="trash"></i></button>
         </div>
       </div>
+
+      <!-- Calculation Mode Pill Selector: Qty vs Area -->
+      <div class="item-mode-pills">
+        <button type="button" class="item-mode-pill ${!isAreaMode ? 'active' : ''}" onclick="setItemMode(${index}, 'qty')">
+          📦 Quantity Mode
+        </button>
+        <button type="button" class="item-mode-pill ${isAreaMode ? 'active' : ''}" onclick="setItemMode(${index}, 'area')">
+          📐 Area (Sq.Ft / Sq.Mtr)
+        </button>
+      </div>
       
       <div class="form-group">
-        <label>Product / Equipment Name</label>
+        <label>${isAreaMode ? 'Work / Flooring Scope Title' : 'Product / Equipment Name'}</label>
         <input type="text" class="form-control item-name-field" value="${item.name || ''}" data-index="${index}" data-field="name" />
       </div>
 
       <div class="form-group">
-        <label>Specifications (Bullet lines)</label>
+        <label>Specifications / Work Steps (Bullet lines)</label>
         <textarea class="form-control item-specs-field" rows="3" data-index="${index}" data-field="specs">${(item.specs || []).join('\n')}</textarea>
       </div>
 
       <div class="form-group">
-        <label>Installation / Highlight Note</label>
-        <input type="text" class="form-control" value="${item.note || ''}" placeholder="e.g. Note : Installation charges are Rs. 3000" data-index="${index}" data-field="note" />
+        <label>Warranty / Special Note</label>
+        <input type="text" class="form-control" value="${item.note || ''}" placeholder="e.g. Note : 5-Year Performance Warranty" data-index="${index}" data-field="note" />
       </div>
 
+      <!-- Qty / Area & Rate Row with Free Unit Writing -->
       <div class="form-grid-2">
         <div class="form-group">
-          <label>Qty & Unit</label>
+          <label>${isAreaMode ? 'Area (Sq. Ft / Sq. Mtr)' : 'Quantity'}</label>
           <div style="display:flex; gap: 4px;">
-            <input type="number" class="form-control" style="width: 60px;" value="${item.qty || 1}" min="1" data-index="${index}" data-field="qty" />
-            <input type="text" class="form-control" value="${item.unit || 'Unit'}" placeholder="Unit" data-index="${index}" data-field="unit" />
+            <input type="number" class="form-control" style="width: 75px;" value="${item.qty || 1}" step="any" min="0" data-index="${index}" data-field="qty" />
+            <input type="text" class="form-control" value="${item.unit || (isAreaMode ? 'Sq. Ft.' : 'Unit')}" placeholder="Write Unit" data-index="${index}" data-field="unit" title="You can write any unit (e.g. Sq. Ft., Sq. Mtr, Unit, Nos)" />
+          </div>
+          <div class="unit-chips-bar">
+            ${chipsHtml}
           </div>
         </div>
         <div class="form-group">
-          <label>Rate (₹)</label>
-          <input type="number" class="form-control" value="${item.rate || 0}" min="0" data-index="${index}" data-field="rate" />
+          <label>Rate (₹ ${isAreaMode ? 'per ' + (item.unit || 'Sq.Ft') : 'per Unit'})</label>
+          <input type="number" class="form-control" value="${item.rate || 0}" step="any" min="0" data-index="${index}" data-field="rate" />
+          <div style="font-size: 0.68rem; color: #94a3b8; margin-top: 4px; text-align: right;">
+            Amount: <strong>₹ ${formatINR((item.qty || 0) * (item.rate || 0))}</strong>
+          </div>
         </div>
       </div>
 
       <div class="form-group">
-        <label>Product Photo (Optional)</label>
+        <label>Photo Attachment (Optional)</label>
         ${imageBoxHtml}
       </div>
     `;
@@ -761,7 +952,7 @@ function renderItems() {
       if (field === 'specs') {
         state.items[idx].specs = e.target.value.split('\n').filter(s => s.trim().length > 0);
       } else if (field === 'qty') {
-        state.items[idx].qty = Number(e.target.value) || 1;
+        state.items[idx].qty = Number(e.target.value) || 0;
       } else if (field === 'rate') {
         state.items[idx].rate = Number(e.target.value) || 0;
       } else {
@@ -795,7 +986,7 @@ function renderViewTable() {
     // Installation note badge HTML
     const noteHtml = item.note ? `<div class="table-install-note">${item.note}</div>` : '';
 
-    const amount = (item.qty || 1) * (item.rate || 0);
+    const amount = (item.qty || 0) * (item.rate || 0);
 
     // Optional image column cell
     let imgTdHtml = '';
@@ -819,6 +1010,9 @@ function renderViewTable() {
       }
     }
 
+    // Format quantity / area cell
+    const qtyText = `${formatQtyNum(item.qty)} ${item.unit || 'Unit'}`;
+
     tr.innerHTML = `
       <td class="col-hash item-row-code">${item.code || ''}</td>
       ${imgTdHtml}
@@ -827,7 +1021,7 @@ function renderViewTable() {
         ${specsHtml}
         ${noteHtml}
       </td>
-      <td class="col-qty">${item.qty || 1} ${item.unit || 'Unit'}</td>
+      <td class="col-qty">${qtyText}</td>
       <td class="col-rate">${formatINR(item.rate)}</td>
       <td class="col-amount">${formatINR(amount)}</td>
     `;
@@ -836,12 +1030,17 @@ function renderViewTable() {
   });
 }
 
-// Format bold prefixes in bullet specs (like Dimensions:, Bed & Frame:)
+// Format bold prefixes in bullet specs (like Dimensions:, Bed & Frame:, 1., 2.)
 function formatSpecLine(text) {
   if (text.includes(':')) {
     const parts = text.split(':');
     const prefix = parts.shift();
     return `<strong>${prefix}:</strong> ${parts.join(':')}`;
+  }
+  // If it starts with a number like "1. ", "2. "
+  const numMatch = text.match(/^(\d+\.\s*)(.*)$/);
+  if (numMatch) {
+    return `<strong>${numMatch[1]}</strong>${numMatch[2]}`;
   }
   return text;
 }
@@ -873,7 +1072,7 @@ window.removeImage = function(itemIndex) {
 function renderTotals() {
   let subtotal = 0;
   state.items.forEach(i => {
-    subtotal += (i.qty || 1) * (i.rate || 0);
+    subtotal += (i.qty || 0) * (i.rate || 0);
   });
 
   const tax = state.calc.applyTax ? (subtotal * (state.calc.taxRate / 100)) : 0;
@@ -951,13 +1150,13 @@ function resetToPDFSample() {
     { ...CATALOG_PRESETS.tt }
   ];
   state.footer.bottomNote = 'Note: GST and transportation charges are extra.';
+  state.calc.qtyHeader = 'QTY / AREA';
   state.calc.showImages = true;
   state.calc.applyTax = false;
   state.calc.showGrandTotal = true;
   state.calc.transport = 0;
   state.calc.discount = 0;
 
-  // Sync back into input fields
   syncInputsFromState();
   renderAll();
   autosaveToStorage();
@@ -1017,6 +1216,23 @@ function syncInputsFromState() {
   document.getElementById('input-terms').value = (state.footer.terms || []).join('\n');
   document.getElementById('input-signatory-title').value = state.footer.sigTitle || '';
   document.getElementById('input-signatory-subtitle').value = state.footer.sigSubtitle || '';
+
+  const selectQtyHeader = document.getElementById('select-qty-header');
+  const customQtyInput = document.getElementById('input-custom-qty-header');
+  if (selectQtyHeader) {
+    const currentHeader = state.calc.qtyHeader || 'QTY / AREA';
+    const standardOptions = ['QTY / AREA', 'AREA (SQ.FT)', 'QTY', 'AREA (SQ.MTR)'];
+    if (standardOptions.includes(currentHeader)) {
+      selectQtyHeader.value = currentHeader;
+      if (customQtyInput) customQtyInput.style.display = 'none';
+    } else {
+      selectQtyHeader.value = 'custom';
+      if (customQtyInput) {
+        customQtyInput.style.display = 'block';
+        customQtyInput.value = currentHeader;
+      }
+    }
+  }
 
   const showImgEl = document.getElementById('toggle-show-images');
   if (showImgEl) showImgEl.checked = state.calc.showImages !== false;
@@ -1149,7 +1365,7 @@ function importJSONBackup(event) {
 // WhatsApp Text Generator
 function generateWhatsAppSummary() {
   let subtotal = 0;
-  state.items.forEach(i => subtotal += (i.qty || 1) * (i.rate || 0));
+  state.items.forEach(i => subtotal += (i.qty || 0) * (i.rate || 0));
   const tax = state.calc.applyTax ? (subtotal * 0.18) : 0;
   const grandTotal = subtotal + tax + state.calc.transport - state.calc.discount;
 
@@ -1157,7 +1373,7 @@ function generateWhatsAppSummary() {
   text += `Estimate No: *${state.doc.number}* | Date: ${state.doc.date}\n`;
   text += `Quoted to: *${state.client.name}* (${state.client.address})\n`;
   text += `------------------------------------\n`;
-  text += `*ITEMS & SPECIFICATIONS:*\n`;
+  text += `*ITEMS & SPECIFICATIONS / SPORTS FLOORING:*\n`;
 
   state.items.forEach((item, idx) => {
     text += `\n*${item.code || (idx + 1)}. ${item.name}*\n`;
@@ -1165,7 +1381,7 @@ function generateWhatsAppSummary() {
       item.specs.forEach(s => text += `  • ${s}\n`);
     }
     if (item.note) text += `  _${item.note}_\n`;
-    text += `  Qty: ${item.qty || 1} ${item.unit || 'Unit'} @ ₹${formatINR(item.rate)} = *₹${formatINR((item.qty || 1) * (item.rate || 0))}*\n`;
+    text += `  ${item.mode === 'area' ? 'Area' : 'Qty'}: ${formatQtyNum(item.qty)} ${item.unit || 'Unit'} @ ₹${formatINR(item.rate)} = *₹${formatINR((item.qty || 0) * (item.rate || 0))}*\n`;
   });
 
   text += `------------------------------------\n`;
@@ -1233,4 +1449,6 @@ window.moveItem = moveItem;
 window.duplicateItem = duplicateItem;
 window.removeItem = removeItem;
 window.removeImage = removeImage;
+window.setItemMode = setItemMode;
+window.setUnitChip = setUnitChip;
 window.setZoom = setZoom;

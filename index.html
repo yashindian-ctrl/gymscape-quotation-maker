@@ -216,6 +216,15 @@
                     <i data-lucide="package-plus"></i> Add Preset <i data-lucide="chevron-down" class="icon-tiny"></i>
                   </button>
                   <div class="preset-dropdown-menu" id="preset-menu">
+                    <div class="preset-group-title">🏸 Sports Flooring & Infrastructure</div>
+                    <button class="preset-opt" data-preset="flooring_base">Base Repair & Undulation Grout Work (Sq.Ft)</button>
+                    <button class="preset-opt" data-preset="flooring_acrylic">Synthetic Acrylic 8-Layer Cushion Court (Sq.Ft)</button>
+                    <button class="preset-opt" data-preset="flooring_wood">Teak Wood Badminton Court Flooring (Sq.Ft)</button>
+                    <button class="preset-opt" data-preset="flooring_pu">Outdoor Seamless Polyurethane PU Flooring (Sq.Ft)</button>
+                    <button class="preset-opt" data-preset="flooring_turf">Multisport Artificial Grass Turf (Sq.Ft)</button>
+                    <button class="preset-opt" data-preset="flooring_pp">Interlocking Modular PP Sports Tiles (Sq.Ft)</button>
+                    
+                    <div class="preset-group-title mt-2">🎱 Sports & Gym Equipment</div>
                     <button class="preset-opt" data-preset="pool1">Commercial Pool Table (Option 1)</button>
                     <button class="preset-opt" data-preset="pool2">Commercial Pool Table (Option 2)</button>
                     <button class="preset-opt" data-preset="foosball1">Commercial Foosball Table (Option 1)</button>
@@ -231,13 +240,29 @@
                 </button>
               </div>
 
-              <!-- Master Toggle for Images Column -->
-              <div class="form-group checkbox-row mb-3" style="background: rgba(15, 23, 42, 0.6); padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid var(--border-color);">
-                <label class="custom-toggle">
-                  <input type="checkbox" id="toggle-show-images" checked />
-                  <span class="toggle-slider"></span>
-                </label>
-                <span class="toggle-label" style="font-size: 0.78rem;">Include Product Image Column in Document</span>
+              <!-- Controls Bar for Columns: Qty/Area Header & Image Toggle -->
+              <div class="item-settings-strip">
+                <div class="form-group" style="margin-bottom: 0; flex: 1;">
+                  <label style="font-size: 0.7rem;">Table Qty / Area Header Label</label>
+                  <div style="display: flex; gap: 0.4rem;">
+                    <select id="select-qty-header" class="form-control" style="padding: 0.35rem 0.5rem; font-size: 0.78rem;">
+                      <option value="QTY / AREA">QTY / AREA (Recommended)</option>
+                      <option value="AREA (SQ.FT)">AREA (SQ.FT)</option>
+                      <option value="QTY">QTY</option>
+                      <option value="AREA (SQ.MTR)">AREA (SQ.MTR)</option>
+                      <option value="custom">Custom Header...</option>
+                    </select>
+                    <input type="text" id="input-custom-qty-header" class="form-control" style="display: none; padding: 0.35rem 0.5rem; font-size: 0.78rem;" placeholder="e.g. SCOPE / AREA" />
+                  </div>
+                </div>
+
+                <div class="form-group checkbox-row" style="margin-bottom: 0; padding-top: 1rem;">
+                  <label class="custom-toggle">
+                    <input type="checkbox" id="toggle-show-images" checked />
+                    <span class="toggle-slider"></span>
+                  </label>
+                  <span class="toggle-label" style="font-size: 0.75rem;">Show Image Column</span>
+                </div>
               </div>
 
               <!-- Dynamic Items Container in Editor -->
